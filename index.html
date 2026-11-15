@@ -1,0 +1,1642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VELORA | The World of Stories</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --dark: #241812;
+  --brown: #6B4935;
+  --gold: #B99561;
+  --cream: #F5EBDD;
+  --beige: #D8C5A9;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--cream);
+  color: var(--dark);
+  font-family: 'Poppins', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.announcement {
+  background: var(--dark);
+  color: var(--cream);
+  text-align: center;
+  padding: 10px;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+nav {
+  background: var(--cream);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 7%;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 3px 15px #24181212;
+}
+
+.logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: 5px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 25px;
+  list-style: none;
+  font-size: 13px;
+}
+
+.nav-links a:hover {
+  color: var(--gold);
+}
+
+.nav-right {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.cart-button {
+  border: 1px solid var(--gold);
+  padding: 9px 14px;
+  background: transparent;
+  color: var(--dark);
+}
+
+.menu-button {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 25px;
+}
+
+.hero {
+  min-height: 590px;
+  background:
+    linear-gradient(90deg, #170e0bdc, #2418126b),
+    url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1800&q=85');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  padding: 70px 10%;
+  color: white;
+}
+
+.hero-content {
+  max-width: 620px;
+  animation: appear 1s ease;
+}
+
+.hero small {
+  color: var(--gold);
+  letter-spacing: 5px;
+  font-size: 12px;
+}
+
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(48px, 7vw, 82px);
+  line-height: 1;
+  margin: 22px 0;
+  font-weight: 500;
+}
+
+.hero p {
+  line-height: 1.9;
+  color: #eee0d0;
+  max-width: 480px;
+  font-size: 14px;
+}
+
+.gold-btn {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--dark);
+  border: none;
+  padding: 14px 28px;
+  margin-top: 28px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  transition: .3s;
+}
+
+.gold-btn:hover {
+  background: var(--cream);
+  transform: translateY(-3px);
+}
+
+.section {
+  padding: 85px 7%;
+}
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 45px;
+}
+
+.section-heading small {
+  color: var(--gold);
+  letter-spacing: 4px;
+  font-size: 11px;
+}
+
+.section-heading h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px;
+  font-weight: 600;
+  margin: 10px 0;
+}
+
+.section-heading p {
+  color: #806d5e;
+  font-size: 13px;
+}
+
+.intro {
+  text-align: center;
+  max-width: 750px;
+  margin: auto;
+  line-height: 2;
+  color: #756254;
+  font-size: 14px;
+}
+
+.dark-section {
+  background: var(--dark);
+  color: var(--cream);
+}
+
+.dark-section .section-heading p {
+  color: var(--beige);
+}
+
+.collection-count {
+  text-align: center;
+  color: var(--gold);
+  font-size: 12px;
+  margin-top: -25px;
+  margin-bottom: 25px;
+  letter-spacing: 2px;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.filter-btn {
+  padding: 9px 19px;
+  border: 1px solid var(--gold);
+  color: var(--cream);
+  background: transparent;
+  font-size: 12px;
+  transition: .3s;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+  background: var(--gold);
+  color: var(--dark);
+}
+
+.search-box {
+  display: block;
+  width: min(100%, 400px);
+  margin: 0 auto 35px;
+  padding: 13px 16px;
+  border: 1px solid var(--gold);
+  background: transparent;
+  color: var(--cream);
+  outline: none;
+}
+
+.search-box::placeholder {
+  color: #cbbba9;
+}
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+}
+
+.book-card {
+  background: #35251d;
+  padding: 14px;
+  transition: .35s;
+  animation: appear .6s ease;
+}
+
+.book-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px #0004;
+}
+
+.book-cover {
+  height: 270px;
+  width: 100%;
+  background: #493629;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.book-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform .4s ease;
+}
+
+.book-card:hover .book-cover img {
+  transform: scale(1.04);
+}
+
+.cover-fallback {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--cream);
+  background: linear-gradient(145deg, #68442e, #241812);
+  border: 5px double var(--gold);
+  outline: 1px solid var(--gold);
+  outline-offset: -10px;
+  padding: 15px;
+}
+
+.cover-fallback span {
+  color: #e2c18c;
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+.cover-fallback h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 27px;
+  margin: 18px 0;
+}
+
+.cover-fallback small {
+  font-size: 10px;
+}
+
+.book-info {
+  padding: 18px 4px 5px;
+}
+
+.book-info h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 23px;
+}
+
+.book-info p {
+  font-size: 11px;
+  color: #c9b49e;
+  margin: 5px 0 12px;
+}
+
+.book-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.price {
+  color: var(--gold);
+  font-size: 14px;
+}
+
+.add-btn {
+  background: var(--gold);
+  border: none;
+  padding: 9px 12px;
+  color: var(--dark);
+  font-size: 10px;
+}
+
+.add-btn:hover {
+  background: var(--cream);
+}
+
+.empty-message {
+  text-align: center;
+  grid-column: 1 / -1;
+  color: var(--beige);
+  padding: 30px;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.category-card {
+  min-height: 190px;
+  background: linear-gradient(135deg, #6b4935, #241812);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--cream);
+  transition: .3s;
+  cursor: pointer;
+  border: 1px solid #b9956155;
+}
+
+.category-card:hover {
+  transform: scale(1.03);
+  background: linear-gradient(135deg, #8a6243, #35251d);
+}
+
+.category-card h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+}
+
+.category-card p {
+  font-size: 11px;
+  color: var(--beige);
+  margin-top: 8px;
+  letter-spacing: 2px;
+}
+
+.mystery {
+  background:
+    linear-gradient(#241812dc, #241812dc),
+    url('https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=1600&q=85');
+  background-position: center;
+  background-size: cover;
+  text-align: center;
+  color: var(--cream);
+  padding: 90px 20px;
+}
+
+.mystery h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px;
+  margin: 15px 0;
+}
+
+.mystery p {
+  color: var(--beige);
+  font-size: 13px;
+  line-height: 2;
+}
+
+.newsletter {
+  text-align: center;
+  background: #e8d8c4;
+}
+
+.newsletter form {
+  display: flex;
+  max-width: 470px;
+  margin: 25px auto 0;
+}
+
+.newsletter input {
+  flex: 1;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--gold);
+  background: var(--cream);
+  outline: none;
+}
+
+.newsletter button {
+  border: none;
+  background: var(--dark);
+  color: var(--cream);
+  padding: 0 20px;
+}
+
+footer {
+  background: var(--dark);
+  color: var(--cream);
+  padding: 55px 7% 20px;
+  text-align: center;
+}
+
+footer .logo {
+  color: var(--gold);
+}
+
+footer p {
+  color: var(--beige);
+  font-size: 12px;
+  margin: 15px 0;
+  line-height: 2;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  margin: 25px 0;
+}
+
+.copyright {
+  border-top: 1px solid #ffffff22;
+  padding-top: 20px;
+  margin-top: 30px;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media(max-width: 950px) {
+  .book-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .nav-links {
+    gap: 13px;
+  }
+}
+
+@media(max-width: 650px) {
+  nav {
+    padding: 15px 5%;
+  }
+
+  .logo {
+    font-size: 27px;
+  }
+
+  .menu-button {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: var(--cream);
+    flex-direction: column;
+    padding: 25px;
+    box-shadow: 0 10px 15px #0002;
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+
+  .hero {
+    min-height: 520px;
+    padding: 50px 7%;
+  }
+
+  .section {
+    padding: 65px 6%;
+  }
+
+  .section-heading h2 {
+    font-size: 39px;
+  }
+
+  .book-grid {
+    gap: 13px;
+  }
+
+  .book-cover {
+    height: 190px;
+  }
+
+  .book-info h3 {
+    font-size: 19px;
+  }
+
+  .book-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .category-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .category-card {
+    min-height: 150px;
+  }
+
+  .category-card h3 {
+    font-size: 25px;
+  }
+
+  .mystery h2 {
+    font-size: 38px;
+  }
+}
+
+/* ===== NOVEL DETAILS PAGE KA DESIGN ===== */
+#novelPage {
+  display: none;
+  background: var(--cream);
+  min-height: 100vh;
+}
+
+.novel-detail-container {
+  max-width: 1000px;
+  margin: 60px auto;
+  padding: 0 7%;
+  display: flex;
+  gap: 50px;
+  align-items: flex-start;
+  animation: appear .6s ease;
+}
+
+.novel-cover-big {
+  width: 320px;
+  height: 480px;
+  background: linear-gradient(145deg, #68442e, #241812);
+  border: 5px double var(--gold);
+  outline: 1px solid var(--gold);
+  outline-offset: -10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--cream);
+  padding: 20px;
+  flex-shrink: 0;
+  box-shadow: 0 15px 35px #0003;
+}
+
+.novel-cover-big span {
+  color: #e2c18c;
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+.novel-cover-big h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  margin: 20px 0;
+  line-height: 1.2;
+}
+
+.novel-cover-big small {
+  font-size: 12px;
+  color: var(--beige);
+}
+
+.novel-info-big {
+  flex: 1;
+  padding-top: 20px;
+}
+
+.genre-tag {
+  background: var(--gold);
+  color: var(--dark);
+  padding: 5px 12px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  display: inline-block;
+  margin-bottom: 15px;
+}
+
+.novel-info-big h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px;
+  line-height: 1.1;
+  margin-bottom: 10px;
+}
+
+.novel-info-big .author {
+  font-size: 16px;
+  color: var(--brown);
+  margin-bottom: 25px;
+  font-style: italic;
+}
+
+.price-tag {
+  font-size: 26px;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 25px;
+}
+
+.description-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--beige);
+  padding-bottom: 5px;
+}
+
+.description {
+  font-size: 14px;
+  line-height: 1.9;
+  color: #5a4a3e;
+  margin-bottom: 30px;
+  text-align: justify;
+}
+
+.detail-add-btn {
+  background: var(--dark);
+  color: var(--cream);
+  border: 1px solid var(--dark);
+  padding: 15px 40px;
+  font-size: 13px;
+  letter-spacing: 2px;
+  transition: .3s;
+}
+
+.detail-add-btn:hover {
+  background: var(--gold);
+  color: var(--dark);
+  border-color: var(--gold);
+}
+
+.detail-back-btn {
+  border: 1px solid var(--gold);
+  padding: 9px 14px;
+  background: transparent;
+  color: var(--dark);
+  font-size: 12px;
+  letter-spacing: 1px;
+  transition: .3s;
+}
+
+.detail-back-btn:hover {
+  background: var(--gold);
+}
+
+@media (max-width: 768px) {
+  .novel-detail-container {
+    flex-direction: column;
+    align-items: center;
+    margin: 30px auto;
+    gap: 30px;
+  }
+  .novel-cover-big {
+    width: 100%;
+    max-width: 300px;
+    height: 420px;
+  }
+  .novel-info-big {
+    text-align: center;
+  }
+  .novel-info-big h1 {
+    font-size: 36px;
+  }
+  .description {
+    text-align: left;
+  }
+}
+
+
+/* ===== CHECKOUT FORM ===== */
+.checkout-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(20, 12, 8, .78);
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+}
+.checkout-overlay.show { display: flex; }
+.checkout-box {
+  width: min(100%, 520px);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--cream);
+  color: var(--dark);
+  padding: 30px;
+  position: relative;
+  box-shadow: 0 15px 50px #0005;
+  border: 1px solid var(--gold);
+}
+.checkout-box h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 38px;
+  margin-bottom: 6px;
+}
+.checkout-subtitle {
+  color: #806d5e;
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+.checkout-close {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  border: 1px solid var(--gold);
+  background: transparent;
+  color: var(--dark);
+  width: 34px;
+  height: 34px;
+  font-size: 21px;
+}
+.checkout-items {
+  background: #eadbc8;
+  padding: 13px;
+  margin-bottom: 18px;
+  font-size: 12px;
+  line-height: 1.9;
+  max-height: 125px;
+  overflow-y: auto;
+}
+.checkout-total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  color: var(--brown);
+  padding: 10px 0 17px;
+  border-bottom: 1px solid var(--beige);
+  margin-bottom: 17px;
+}
+.checkout-form label {
+  display: block;
+  font-size: 12px;
+  margin: 12px 0 6px;
+  color: var(--brown);
+}
+.checkout-form input,
+.checkout-form textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--beige);
+  background: #fffaf3;
+  color: var(--dark);
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+}
+.checkout-form input:focus,
+.checkout-form textarea:focus { border-color: var(--gold); }
+.checkout-form textarea {
+  min-height: 85px;
+  resize: vertical;
+}
+.checkout-submit {
+  width: 100%;
+  padding: 14px;
+  margin-top: 18px;
+  background: var(--dark);
+  color: var(--cream);
+  border: 1px solid var(--dark);
+  letter-spacing: 1px;
+  font-size: 12px;
+}
+.checkout-submit:hover { background: var(--gold); color: var(--dark); }
+.checkout-submit:disabled { opacity: .6; cursor: wait; }
+.checkout-message {
+  font-size: 12px;
+  line-height: 1.6;
+  margin-top: 12px;
+  text-align: center;
+}
+.checkout-note {
+  color: #806d5e;
+  font-size: 10px;
+  margin-top: 10px;
+  text-align: center;
+}
+@media(max-width: 500px) {
+  .checkout-box { padding: 23px 18px; }
+  .checkout-box h2 { font-size: 32px; }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ================= MAIN WEBSITE ================= -->
+<div id="mainPage">
+
+<div class="announcement">
+  WELCOME TO VELORA — EVERY BOOK OPENS A NEW WORLD
+</div>
+
+<nav>
+  <a href="#" class="logo">VELORA</a>
+
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#books">Shop Books</a></li>
+    <li><a href="#categories">Categories</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+
+  <div class="nav-right">
+    <button class="cart-button" onclick="showCart()">
+      🛒 Cart (<span id="cartCount">0</span>)
+    </button>
+    <button class="menu-button" onclick="toggleMenu()">☰</button>
+  </div>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-content">
+    <small>THE WORLD OF STORIES</small>
+    <h1>Escape Into<br>Another World.</h1>
+    <p>
+      Discover stories that touch your heart, awaken your imagination
+      and take you on unforgettable journeys.
+    </p>
+    <a href="#books" class="gold-btn">EXPLORE COLLECTION</a>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="section-heading">
+    <small>WELCOME TO VELORA</small>
+    <h2>More Than Just Books</h2>
+    <p>A place where every story finds its reader.</p>
+  </div>
+
+  <p class="intro">
+    At VELORA, we believe that books are doors to different worlds.
+    From beautiful romance to mysterious adventures, discover your
+    next favourite story in our carefully selected collection.
+    Find a book, turn a page, and let your imagination travel.
+  </p>
+</section>
+
+<section class="section dark-section" id="books">
+  <div class="section-heading">
+    <small>OUR COLLECTION</small>
+    <h2>Discover Your Next Story</h2>
+    <p>Explore a selection of stories for every kind of reader.</p>
+  </div>
+
+  <div class="collection-count">
+    30 STORIES · ONE BEAUTIFUL COLLECTION
+  </div>
+
+  <input
+    type="text"
+    class="search-box"
+    id="searchInput"
+    placeholder="Search your favourite novel..."
+  >
+
+  <div class="filters">
+    <button class="filter-btn active" onclick="filterBooks('All', this)">All Books</button>
+    <button class="filter-btn" onclick="filterBooks('Romance', this)">Romance</button>
+    <button class="filter-btn" onclick="filterBooks('Mystery', this)">Mystery</button>
+    <button class="filter-btn" onclick="filterBooks('Fantasy', this)">Fantasy</button>
+    <button class="filter-btn" onclick="filterBooks('Urdu', this)">Urdu</button>
+    <button class="filter-btn" onclick="filterBooks('Fiction', this)">Fiction</button>
+  </div>
+
+  <div class="book-grid" id="bookGrid"></div>
+</section>
+
+<section class="section" id="categories">
+  <div class="section-heading">
+    <small>FIND YOUR GENRE</small>
+    <h2>Explore Categories</h2>
+    <p>Every reader has a different world.</p>
+  </div>
+
+  <div class="category-grid">
+    <div class="category-card" onclick="chooseCategory('Romance')">
+      <h3>Romance</h3>
+      <p>LOVE & EMOTIONS</p>
+    </div>
+
+    <div class="category-card" onclick="chooseCategory('Mystery')">
+      <h3>Mystery</h3>
+      <p>SECRETS & CLUES</p>
+    </div>
+
+    <div class="category-card" onclick="chooseCategory('Fantasy')">
+      <h3>Fantasy</h3>
+      <p>MAGICAL WORLDS</p>
+    </div>
+
+    <div class="category-card" onclick="chooseCategory('Urdu')">
+      <h3>Urdu Novels</h3>
+      <p>BEAUTIFUL STORIES</p>
+    </div>
+
+    <div class="category-card" onclick="chooseCategory('Fiction')">
+      <h3>Fiction</h3>
+      <p>IMAGINATIVE TALES</p>
+    </div>
+
+    <div class="category-card" onclick="chooseCategory('All')">
+      <h3>All Books</h3>
+      <p>EXPLORE EVERYTHING</p>
+    </div>
+  </div>
+</section>
+
+<section class="mystery">
+  <small style="letter-spacing:4px;color:#B99561;">A LITTLE SURPRISE</small>
+  <h2>The Mystery Book Box</h2>
+  <p>
+    Don't know what to read next?<br>
+    Let a surprise story find its way to you.
+  </p>
+  <a href="#books" class="gold-btn">DISCOVER A BOOK</a>
+</section>
+
+<section class="section newsletter" id="contact">
+  <div class="section-heading">
+    <small>STAY CONNECTED</small>
+    <h2>Join The Reading Club</h2>
+    <p>Get updates about new arrivals and special book collections.</p>
+  </div>
+
+  <form id="newsletterForm">
+    <input type="email" id="emailInput" placeholder="Enter your email" required>
+    <button type="submit">SUBSCRIBE</button>
+  </form>
+</section>
+
+<footer>
+  <div class="logo">VELORA</div>
+  <p>Every Book Opens a New World.</p>
+
+  <div class="footer-links">
+    <a href="#home">Home</a>
+    <a href="#books">Shop Books</a>
+    <a href="#categories">Categories</a>
+    <a href="#about">About Us</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <p class="copyright">
+    © 2026 VELORA. All Rights Reserved.
+  </p>
+</footer>
+
+</div>
+<!-- ================= MAIN WEBSITE END ================= -->
+
+
+<!-- ================= NOVEL DETAILS PAGE ================= -->
+<div id="novelPage">
+
+  <nav>
+    <a href="#" class="logo" onclick="backToHome()">VELORA</a>
+    <button class="detail-back-btn" onclick="backToHome()">← BACK TO HOME</button>
+  </nav>
+
+  <div class="novel-detail-container">
+    <div class="novel-cover-big">
+      <span>VELORA COLLECTION</span>
+      <h3 id="detailCoverTitle">Loading...</h3>
+      <small id="detailCoverAuthor">Author</small>
+    </div>
+
+    <div class="novel-info-big">
+      <div class="genre-tag" id="detailGenre">Genre</div>
+      <h1 id="detailTitle">Novel Title</h1>
+      <p class="author" id="detailAuthor">By Author</p>
+      <p class="price-tag" id="detailPrice">Rs. 0</p>
+
+      <h3 class="description-title">About This Novel</h3>
+      <p class="description" id="detailDescription">Description loading...</p>
+
+      <button class="detail-add-btn" id="detailAddBtn">ADD TO CART</button>
+    </div>
+  </div>
+
+</div>
+<!-- ================= NOVEL DETAILS PAGE END ================= -->
+
+
+<!-- ================= CHECKOUT MODAL ================= -->
+<div class="checkout-overlay" id="checkoutOverlay">
+  <div class="checkout-box">
+    <button type="button" class="checkout-close" onclick="closeCheckout()" aria-label="Close checkout">×</button>
+    <h2>Complete Your Order</h2>
+    <p class="checkout-subtitle">Please enter your delivery details.</p>
+
+    <div class="checkout-items" id="checkoutItems"></div>
+    <div class="checkout-total">
+      <span>Total Amount</span>
+      <span id="checkoutTotal">Rs. 0</span>
+    </div>
+
+    <form class="checkout-form" id="checkoutForm">
+      <label for="customerName">Full Name</label>
+      <input type="text" id="customerName" name="customerName" placeholder="Enter your full name" required maxlength="100">
+
+      <label for="customerPhone">Phone Number</label>
+      <input type="tel" id="customerPhone" name="customerPhone" placeholder="03XXXXXXXXX" required maxlength="20">
+
+      <label for="customerAddress">Complete Delivery Address</label>
+      <textarea id="customerAddress" name="customerAddress" placeholder="House number, street, area, city..." required maxlength="500"></textarea>
+
+      <button type="submit" class="checkout-submit" id="checkoutSubmit">PLACE ORDER</button>
+      <p class="checkout-message" id="checkoutMessage" role="status"></p>
+      <p class="checkout-note">Payment method: Cash on Delivery</p>
+    </form>
+  </div>
+</div>
+<!-- ================= CHECKOUT MODAL END ================= -->
+
+
+
+
+<script>
+// SAARI 30 NOVELS KI LIST
+const books = [
+  // 15 ENGLISH NOVELS
+  {
+    title: "The Alchemist",
+    author: "Paulo Coelho",
+    genre: "Fiction",
+    price: 1200,
+    coverQuery: "The Alchemist Paulo Coelho",
+    description: "The Alchemist is a philosophical novel about a young Andalusian shepherd named Santiago. He travels from Spain to the Egyptian desert in search of a treasure buried near the Pyramids. Along the way, he meets a Gypsy woman, a man who calls himself a king, and an alchemist, all of whom guide him on his journey of self-discovery. It is a beautiful story about following your dreams and listening to your heart."
+  },
+  {
+    title: "Pride and Prejudice",
+    author: "Jane Austen",
+    genre: "Romance",
+    price: 1100,
+    coverQuery: "Pride and Prejudice Jane Austen",
+    description: "Pride and Prejudice is a classic romantic novel that follows the emotional development of Elizabeth Bennet, the protagonist, who learns about the repercussions of hasty judgments. The story revolves around the turbulent relationship between Elizabeth and Mr. Darcy, a wealthy and proud gentleman. It is a timeless tale of love, misunderstandings, and personal growth."
+  },
+  {
+    title: "The Great Gatsby",
+    author: "F. Scott Fitzgerald",
+    genre: "Fiction",
+    price: 1300,
+    coverQuery: "The Great Gatsby F Scott Fitzgerald",
+    description: "The Great Gatsby is a novel set in the Jazz Age on Long Island. It tells the story of the mysterious millionaire Jay Gatsby and his obsession with the beautiful Daisy Buchanan. Through the eyes of narrator Nick Carraway, the novel explores themes of wealth, love, idealism, and the American Dream."
+  },
+  {
+    title: "It Ends with Us",
+    author: "Colleen Hoover",
+    genre: "Romance",
+    price: 1500,
+    coverQuery: "It Ends with Us Colleen Hoover",
+    description: "It Ends with Us is a deeply emotional novel that follows Lily Bloom, a woman who has just moved to Boston and opened her own floral shop. She meets Ryle Kincaid, a charming neurosurgeon, and the two begin a passionate relationship. However, as their relationship progresses, Lily sees a side of Ryle that reminds her of her parents' abusive relationship. The novel deals with themes of domestic abuse, love, and the difficult choices we have to make."
+  },
+  {
+    title: "Ugly Love",
+    author: "Colleen Hoover",
+    genre: "Romance",
+    price: 1450,
+    coverQuery: "Ugly Love Colleen Hoover",
+    description: "Ugly Love tells the story of Tate Collins and Miles Archer, who agree to a purely physical relationship with no emotional strings attached. However, as they spend more time together, Tate finds herself falling for Miles despite his emotional walls. The novel explores themes of love, loss, and healing from past trauma."
+  },
+  {
+    title: "Verity",
+    author: "Colleen Hoover",
+    genre: "Mystery",
+    price: 1600,
+    coverQuery: "Verity Colleen Hoover",
+    description: "Verity is a gripping psychological thriller. Lowen Ashleigh, a struggling writer, is hired by Jeremy Crawford to complete the remaining books in a successful series written by his injured wife, Verity. While staying at the Crawford home, Lowen discovers Verity's hidden manuscript—an autobiography that reveals shocking and dark secrets about the family. What follows is a chilling tale of suspense, lies, and manipulation."
+  },
+  {
+    title: "The Silent Patient",
+    author: "Alex Michaelides",
+    genre: "Mystery",
+    price: 1500,
+    coverQuery: "The Silent Patient Alex Michaelides",
+    description: "The Silent Patient is a psychological thriller about Alicia Berenson, a famous painter who shoots her husband five times and then never speaks another word. Theo Faber, a criminal psychotherapist, is determined to uncover why she did it. The novel is a masterful exploration of the human mind, trauma, and obsession."
+  },
+  {
+    title: "Twisted Love",
+    author: "Ana Huang",
+    genre: "Romance",
+    price: 1700,
+    coverQuery: "Twisted Love Ana Huang",
+    description: "Twisted Love is a steamy romance novel about Ava Chen, a free-spirited woman, and Alex Volkov, her brother's best friend who is cold and dangerous. When Ava is forced to move in with Alex, their chemistry becomes undeniable. The novel explores themes of love, trust, and overcoming past demons."
+  },
+  {
+    title: "The Fault in Our Stars",
+    author: "John Green",
+    genre: "Romance",
+    price: 1250,
+    coverQuery: "The Fault in Our Stars John Green",
+    description: "The Fault in Our Stars is a heart-wrenching novel about Hazel Grace Lancaster, a sixteen-year-old cancer patient, who falls in love with Augustus Waters, a charming and witty boy she meets at a support group. Their love story is beautiful, tragic, and unforgettable."
+  },
+  {
+    title: "Harry Potter and the Philosopher's Stone",
+    author: "J.K. Rowling",
+    genre: "Fantasy",
+    price: 1800,
+    coverQuery: "Harry Potter Philosopher Stone",
+    description: "The first book in the magical Harry Potter series. It introduces Harry, an orphaned boy who discovers on his eleventh birthday that he is a wizard. He is invited to study at Hogwarts School of Witchcraft and Wizardry, where he makes his first friends, learns about magic, and uncovers the mystery of the Philosopher's Stone. A fantastic journey into a world of spells, potions, and friendship."
+  },
+  {
+    title: "The Book Thief",
+    author: "Markus Zusak",
+    genre: "Fiction",
+    price: 1400,
+    coverQuery: "The Book Thief Markus Zusak",
+    description: "The Book Thief is a novel set in Nazi Germany, narrated by Death itself. It tells the story of Liesel Meminger, a young girl who steals books and shares them with others during a time of great suffering. It is a powerful story about the importance of words, love, and humanity in the darkest of times."
+  },
+  {
+    title: "The Notebook",
+    author: "Nicholas Sparks",
+    genre: "Romance",
+    price: 1350,
+    coverQuery: "The Notebook Nicholas Sparks",
+    description: "The Notebook is a beautiful love story about Noah Calhoun and Allie Nelson, who fall in love one summer in the 1940s. Their love is tested by time, war, and social differences, but their bond remains unbreakable. It is a story of enduring love and devotion."
+  },
+  {
+    title: "The Seven Husbands of Evelyn Hugo",
+    author: "Taylor Jenkins Reid",
+    genre: "Fiction",
+    price: 1650,
+    coverQuery: "Seven Husbands of Evelyn Hugo",
+    description: "The Seven Husbands of Evelyn Hugo tells the story of a reclusive Hollywood icon who finally decides to tell her life story to an unknown journalist. It is a captivating tale of ambition, love, and the price of fame, spanning decades of Hollywood history."
+  },
+  {
+    title: "A Thousand Splendid Suns",
+    author: "Khaled Hosseini",
+    genre: "Fiction",
+    price: 1500,
+    coverQuery: "A Thousand Splendid Suns Khaled Hosseini",
+    description: "A Thousand Splendid Suns is a powerful novel set in Afghanistan, following the lives of two women, Mariam and Laila, whose paths cross in unexpected ways. It is a story of love, sacrifice, and resilience in the face of war and oppression."
+  },
+  {
+    title: "The Kite Runner",
+    author: "Khaled Hosseini",
+    genre: "Fiction",
+    price: 1450,
+    coverQuery: "The Kite Runner Khaled Hosseini",
+    description: "The Kite Runner is a novel about Amir, a boy from Kabul, and his complicated relationship with his friend Hassan. It is a story of guilt, redemption, and the enduring bonds of friendship, set against the backdrop of Afghanistan's turbulent history."
+  },
+
+  // 15 URDU NOVELS
+  {
+    title: "Peer-e-Kamil",
+    author: "Umera Ahmed",
+    genre: "Urdu",
+    price: 950,
+    coverQuery: "Peer e Kamil Umera Ahmed",
+    description: "Peer-e-Kamil (The Perfect Mentor) is a highly acclaimed Urdu novel by Umera Ahmed. It explores the journey of Imama Hashim, a brilliant medical student, and Salar Sikandar, a young man from a wealthy but troubled family. The novel beautifully intertwines themes of spirituality, religious awakening, love, and the search for purpose. It is a story about how faith can transform lives and guide individuals through the darkest times."
+  },
+  {
+    title: "Aab-e-Hayat",
+    author: "Umera Ahmed",
+    genre: "Urdu",
+    price: 1100,
+    coverQuery: "Aab e Hayat Umera Ahmed",
+    description: "Aab-e-Hayat is the sequel to Peer-e-Kamil. It continues the story of Salar and Imama, exploring their journey after marriage. The novel deals with themes of spiritual growth, forgiveness, and the challenges of living a life guided by faith. It is a beautiful continuation of a beloved story."
+  },
+  {
+    title: "Jannat Kay Pattay",
+    author: "Nimra Ahmed",
+    genre: "Urdu",
+    price: 1300,
+    coverQuery: "Jannat Kay Pattay Nimra Ahmed",
+    description: "Jannat Kay Pattay (The Leaves of Heaven) is a popular Urdu novel that tells the story of Hijab, a young girl from Lahore, and Jihan Sikandar, the son of a powerful and influential man. Their love story faces immense challenges due to class differences and societal pressures. It is a tale of love, sacrifice, and the ultimate triumph of true feelings against all odds."
+  },
+  {
+    title: "Namal",
+    author: "Nimra Ahmed",
+    genre: "Urdu",
+    price: 1500,
+    coverQuery: "Namal Nimra Ahmed",
+    description: "Namal is a thrilling Urdu novel that combines romance, mystery, and suspense. It follows the story of Namal, a strong-willed woman, and the secrets that surround her family. The novel is known for its unpredictable plot twists and deep character development."
+  },
+  {
+    title: "Mushaf",
+    author: "Nimra Ahmed",
+    genre: "Urdu",
+    price: 1000,
+    coverQuery: "Mushaf Nimra Ahmed",
+    description: "Mushaf is a spiritual and romantic Urdu novel that explores the journey of a young woman named Mushaf. The novel deals with themes of faith, love, and the struggle between good and evil. It is a deeply moving story that touches the heart."
+  },
+  {
+    title: "Haalim",
+    author: "Nimra Ahmed",
+    genre: "Urdu",
+    price: 1400,
+    coverQuery: "Haalim Nimra Ahmed",
+    description: "Haalim is a thought-provoking Urdu novel that blends fiction with spiritual and philosophical themes. It tells the story of a young man's journey of self-discovery and his quest for truth. The novel is known for its unique narrative style and deep insights."
+  },
+  {
+    title: "Amar Bail",
+    author: "Umera Ahmed",
+    genre: "Urdu",
+    price: 1050,
+    coverQuery: "Amar Bail Umera Ahmed",
+    description: "Amar Bail is a classic Urdu novel by Umera Ahmed that tells the story of a young woman's struggle against societal norms and her quest for love and freedom. It is a powerful story about sacrifice, resilience, and the strength of the human spirit."
+  },
+  {
+    title: "Zindagi Gulzar Hai",
+    author: "Umera Ahmed",
+    genre: "Urdu",
+    price: 1000,
+    coverQuery: "Zindagi Gulzar Hai Umera Ahmed",
+    description: "Zindagi Gulzar Hai is a beloved Urdu novel that tells the story of Kashaf Murtaza, a strong and independent young woman, and Zaroon Junaid, a wealthy and carefree young man. Their contrasting personalities and backgrounds create a story full of love, conflict, and personal growth."
+  },
+  {
+    title: "La Hasil",
+    author: "Umera Ahmed",
+    genre: "Urdu",
+    price: 950,
+    coverQuery: "La Hasil Umera Ahmed",
+    description: "La Hasil is a thought-provoking Urdu novel that explores the themes of love, loss, and the meaning of life. It tells the story of a young woman's journey through pain and hardship, and her ultimate realization about the true purpose of existence."
+  },
+  {
+    title: "Ishq Aatish",
+    author: "Areej Shah",
+    genre: "Urdu",
+    price: 1200,
+    coverQuery: "Ishq Aatish Areej Shah",
+    description: "Ishq Aatish is a passionate Urdu romance novel that tells the story of two lovers whose relationship is tested by fire and hardship. It is a story of intense emotions, sacrifice, and the unbreakable bond of love."
+  },
+  {
+    title: "Mala",
+    author: "Nimra Ahmed",
+    genre: "Urdu",
+    price: 1300,
+    coverQuery: "Mala Nimra Ahmed novel",
+    description: "Mala is a captivating Urdu novel that tells the story of a young woman named Mala and her journey through life's challenges. It is a story of love, loss, and the strength to overcome adversity."
+  },
+  {
+    title: "Abdullah",
+    author: "Hashim Nadeem",
+    genre: "Urdu",
+    price: 1100,
+    coverQuery: "Abdullah Hashim Nadeem",
+    description: "Abdullah is a powerful Urdu novel that explores themes of faith, sacrifice, and the true meaning of love. It tells the story of a young man's spiritual journey and his quest for divine love."
+  },
+  {
+    title: "Khuda Aur Mohabbat",
+    author: "Hashim Nadeem",
+    genre: "Urdu",
+    price: 1250,
+    coverQuery: "Khuda Aur Mohabbat Hashim Nadeem",
+    description: "Khuda Aur Mohabbat is a spiritual and romantic Urdu novel that tells the story of Hammad and Imaan. It is a journey of love, faith, and the search for spiritual enlightenment. The novel is known for its deep emotional resonance."
+  },
+  {
+    title: "Man-o-Salwa",
+    author: "Umera Ahmed",
+    genre: "Urdu",
+    price: 1050,
+    coverQuery: "Man o Salwa Umera Ahmed",
+    description: "Man-o-Salwa is an inspiring Urdu novel that tells the story of a young woman's journey from materialism to spirituality. It is a story of faith, sacrifice, and the realization that true happiness lies in following the path of Allah."
+  },
+  {
+    title: "Raja Gidh",
+    author: "Bano Qudsia",
+    genre: "Urdu",
+    price: 1000,
+    coverQuery: "Raja Gidh Bano Qudsia",
+    description: "Raja Gidh is a classic Urdu novel that explores the complexities of human nature, morality, and the struggle between good and evil. It is a profound and thought-provoking work that has left a lasting impact on Urdu literature."
+  }
+];
+
+let cart = [];
+let currentGenre = "All";
+
+const bookGrid = document.getElementById("bookGrid");
+
+function displayBooks() {
+
+  const search = document
+    .getElementById("searchInput")
+    .value.toLowerCase();
+
+  const filteredBooks = books.filter(book => {
+
+    const matchesGenre =
+      currentGenre === "All" || book.genre === currentGenre;
+
+    const matchesSearch =
+      book.title.toLowerCase().includes(search) ||
+      book.author.toLowerCase().includes(search);
+
+    return matchesGenre && matchesSearch;
+  });
+
+  bookGrid.innerHTML = "";
+
+  if (filteredBooks.length === 0) {
+    bookGrid.innerHTML =
+      '<p class="empty-message">No books found. Try another search.</p>';
+    return;
+  }
+
+  filteredBooks.forEach(book => {
+
+    const card = document.createElement("div");
+    card.className = "book-card";
+
+    const safeTitle = book.title.replace(/'/g, "\\'");
+
+    card.innerHTML = `
+      <div class="book-cover" style="cursor:pointer;" onclick="openNovel('${safeTitle}')">
+        <div class="cover-fallback">
+          <span>VELORA COLLECTION</span>
+          <h3>${book.title}</h3>
+          <small>${book.author}</small>
+        </div>
+      </div>
+
+      <div class="book-info">
+        <h3 style="cursor:pointer;" onclick="openNovel('${safeTitle}')">${book.title}</h3>
+        <p>By ${book.author} · ${book.genre}</p>
+
+        <div class="book-bottom">
+          <span class="price">
+            Rs. ${book.price.toLocaleString("en-PK")}
+          </span>
+          <button class="add-btn">ADD TO CART</button>
+        </div>
+      </div>
+    `;
+
+    const cover = card.querySelector(".book-cover");
+    const fallback = cover.querySelector(".cover-fallback");
+
+    // Search for a matching book cover
+    const searchURL =
+      "https://openlibrary.org/search.json?title=" +
+      encodeURIComponent(book.title) +
+      "&author=" +
+      encodeURIComponent(book.author) +
+      "&fields=cover_i&limit=5";
+
+    fetch(searchURL)
+      .then(response => {
+        if (!response.ok) throw new Error("Cover search failed");
+        return response.json();
+      })
+      .then(data => {
+
+        const result = data.docs?.find(item => item.cover_i);
+
+        if (!result) return;
+
+        const img = document.createElement("img");
+
+        img.src =
+          `https://covers.openlibrary.org/b/id/${result.cover_i}-L.jpg`;
+
+        img.alt = book.title + " book cover";
+
+        img.onload = () => {
+          fallback.style.display = "none";
+          cover.insertBefore(img, cover.firstChild);
+        };
+
+        img.onerror = () => {
+          fallback.style.display = "flex";
+        };
+
+      })
+      .catch(error => {
+        console.log("Cover unavailable:", book.title);
+      });
+
+    card.querySelector(".add-btn").addEventListener("click", (e) => {
+      e.stopPropagation();
+      addToCart(book);
+    });
+
+    bookGrid.appendChild(card);
+
+  });
+}
+
+function filterBooks(genre, button) {
+
+  currentGenre = genre;
+
+  document.querySelectorAll(".filter-btn").forEach(btn => {
+    btn.classList.remove("active");
+  });
+
+  button.classList.add("active");
+
+  displayBooks();
+}
+
+function chooseCategory(genre) {
+
+  currentGenre = genre;
+
+  document.querySelectorAll(".filter-btn").forEach(btn => {
+
+    const label = genre === "All" ? "All Books" : genre;
+
+    btn.classList.toggle(
+      "active",
+      btn.textContent.trim() === label
+    );
+  });
+
+  document.getElementById("books").scrollIntoView({
+    behavior: "smooth"
+  });
+
+  displayBooks();
+}
+
+function addToCart(book) {
+
+  cart.push(book);
+
+  document.getElementById("cartCount").textContent = cart.length;
+
+  alert(book.title + " added to your cart!");
+}
+
+function showCart() {
+  if (cart.length === 0) {
+    alert("Your cart is empty. Explore our books first!");
+    return;
+  }
+
+  const total = cart.reduce((sum, book) => sum + Number(book.price), 0);
+  const itemsHTML = cart.map((book, index) =>
+    `<div>${index + 1}. ${book.title} — Rs. ${Number(book.price).toLocaleString("en-PK")}</div>`
+  ).join("");
+
+  document.getElementById("checkoutItems").innerHTML = itemsHTML;
+  document.getElementById("checkoutTotal").textContent =
+    "Rs. " + total.toLocaleString("en-PK");
+  document.getElementById("checkoutMessage").textContent = "";
+  document.getElementById("checkoutOverlay").classList.add("show");
+}
+
+function closeCheckout() {
+  document.getElementById("checkoutOverlay").classList.remove("show");
+}
+
+function toggleMenu() {
+  document.getElementById("navLinks").classList.toggle("show");
+}
+
+// ===== NOVEL PAGE KHOLNE KA FUNCTION =====
+function openNovel(title) {
+  const book = books.find(b => b.title === title);
+  if (!book) return;
+
+  document.getElementById("detailCoverTitle").textContent = book.title;
+  document.getElementById("detailCoverAuthor").textContent = book.author;
+  document.getElementById("detailTitle").textContent = book.title;
+  document.getElementById("detailAuthor").textContent = "By " + book.author;
+  document.getElementById("detailGenre").textContent = book.genre;
+  document.getElementById("detailPrice").textContent = "Rs. " + book.price.toLocaleString("en-PK");
+  document.getElementById("detailDescription").textContent = book.description;
+
+  const detailAddBtn = document.getElementById("detailAddBtn");
+  detailAddBtn.onclick = () => addToCart(book);
+
+  document.getElementById("mainPage").style.display = "none";
+  document.getElementById("novelPage").style.display = "block";
+  window.scrollTo(0, 0);
+}
+
+// ===== WAPAS HOME JANE KA FUNCTION =====
+function backToHome() {
+  document.getElementById("novelPage").style.display = "none";
+  document.getElementById("mainPage").style.display = "block";
+  window.scrollTo(0, 0);
+}
+
+document.getElementById("searchInput").addEventListener("input", displayBooks);
+
+document.getElementById("newsletterForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+  alert("Thank you for joining the VELORA Reading Club!");
+  this.reset();
+});
+
+
+// ===== SEND CUSTOMER ORDER TO BACKEND =====
+// Local testing: backend must be running on http://localhost:5000.
+// When deployed, replace this with your Render backend URL.
+const API_BASE = "http://localhost:5000";
+
+document.getElementById("checkoutForm").addEventListener("submit", async function(event) {
+  event.preventDefault();
+
+  if (cart.length === 0) {
+    document.getElementById("checkoutMessage").textContent = "Your cart is empty.";
+    return;
+  }
+
+  const customerName = document.getElementById("customerName").value.trim();
+  const phone = document.getElementById("customerPhone").value.trim();
+  const address = document.getElementById("customerAddress").value.trim();
+  const submitButton = document.getElementById("checkoutSubmit");
+  const message = document.getElementById("checkoutMessage");
+
+  if (!customerName || !phone || !address) {
+    message.textContent = "Please complete all delivery fields.";
+    return;
+  }
+
+  const totalAmount = cart.reduce((sum, book) => sum + Number(book.price), 0);
+  const orderData = {
+    customerName: customerName,
+    items: cart.map(book => ({
+      book: { title: book.title },
+      price: Number(book.price),
+      quantity: 1
+    })),
+    phone: phone,
+    address: address,
+    totalAmount: totalAmount
+  };
+
+  submitButton.disabled = true;
+  submitButton.textContent = "PLACING ORDER...";
+  message.textContent = "Please wait while we submit your order.";
+
+  try {
+    const response = await fetch(`${API_BASE}/api/orders`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(orderData)
+    });
+
+    const result = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(result.message || "Order could not be placed. Please try again.");
+    }
+
+    alert("Thank you! Your VELORA order has been placed successfully.");
+    cart = [];
+    document.getElementById("cartCount").textContent = "0";
+    this.reset();
+    message.textContent = "";
+    closeCheckout();
+  } catch (error) {
+    console.error("Order submission error:", error);
+    message.textContent = error.message || "Unable to connect to the server. Please try again.";
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = "PLACE ORDER";
+  }
+});
+
+// Close checkout when the dark background is clicked.
+document.getElementById("checkoutOverlay").addEventListener("click", function(event) {
+  if (event.target === this) closeCheckout();
+});
+
+
+// ===== START =====
+displayBooks();
+
+</script>
+
+</body>
+</html>

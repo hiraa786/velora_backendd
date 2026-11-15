@@ -1,0 +1,485 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VELORA | Admin Panel</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 28px;
+    background: #F5EBDD;
+    color: #241812;
+    font-family: Arial, sans-serif;
+}
+
+.panel {
+    max-width: 1000px;
+    margin: auto;
+}
+
+h1 {
+    font-family: Georgia, serif;
+    color: #6B4935;
+    text-align: center;
+    margin: 8px 0 28px;
+}
+
+.login-box, .order-card {
+    background: white;
+    border: 1px solid #D8C5A9;
+    border-radius: 10px;
+    padding: 22px;
+    margin: 0 auto 18px;
+    box-shadow: 0 4px 14px #0000000c;
+}
+
+.login-box {
+    max-width: 420px;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 12px;
+    margin: 7px 0 14px;
+    border: 1px solid #D8C5A9;
+    border-radius: 6px;
+}
+
+button {
+    background: #6B4935;
+    color: white;
+    border: 0;
+    padding: 11px 17px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #4c3023;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.order-card {
+    border-left: 5px solid #B99561;
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    border-bottom: 1px dashed #ccc;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+
+.book-list {
+    background: #faf7f2;
+    padding: 12px;
+    border-radius: 6px;
+    margin-top: 12px;
+}
+
+.book-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 7px 0;
+    font-size: 14px;
+}
+
+.total {
+    text-align: right;
+    font-weight: bold;
+    color: #9b7746;
+    font-size: 18px;
+    margin-top: 14px;
+}
+
+.status-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.status-row select {
+    padding: 9px;
+    border: 1px solid #d8c5a9;
+    border-radius: 6px;
+}
+
+#message {
+    color: #8b2e24;
+    text-align: center;
+    min-height: 22px;
+}
+
+.hidden {
+    display: none;
+}
+
+@media(max-width:600px) {
+    body {
+        padding: 14px;
+    }
+
+    .topbar, .order-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="panel">
+
+    <h1>VELORA — Admin Panel</h1>
+
+    <p id="message"></p>
+
+    <!-- LOGIN -->
+    <section id="login-box" class="login-box">
+
+        <h2>Admin Login</h2>
+
+        <label for="email">Email</label>
+        <input
+            id="email"
+            type="email"
+            autocomplete="username"
+            placeholder="Admin email"
+        >
+
+        <label for="password">Password</label>
+        <input
+            id="password"
+            type="password"
+            autocomplete="current-password"
+            placeholder="Admin password"
+        >
+
+        <button id="login-btn" type="button">Login</button>
+
+    </section>
+
+    <!-- ORDERS -->
+    <section id="orders-section" class="hidden">
+
+        <div class="topbar">
+            <h2>Customer Orders</h2>
+            <button id="logout-btn" type="button">Logout</button>
+        </div>
+
+        <div id="orders-container">
+            Orders are loading...
+        </div>
+
+    </section>
+
+</div>
+
+<script>
+
+// LOCAL BACKEND
+// Render deploy hone ke baad is URL ko Render URL se replace karna hoga.
+const API = "http://localhost:5000/api";
+
+const $ = id => document.getElementById(id);
+
+let token = sessionStorage.getItem("veloraAdminToken") || "";
+
+function message(text) {
+    $("message").textContent = text;
+}
+
+function addText(parent, tag, value) {
+    const el = document.createElement(tag);
+    el.textContent = value;
+    parent.appendChild(el);
+    return el;
+}
+
+// ADMIN LOGIN
+async function login() {
+
+    message("");
+
+    try {
+
+        const response = await fetch(`${API}/auth/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: $("email").value.trim(),
+                password: $("password").value
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Login failed");
+        }
+
+        if (!data.user || !data.user.isAdmin) {
+            throw new Error("Admin access required.");
+        }
+
+        token = data.token;
+
+        sessionStorage.setItem("veloraAdminToken", token);
+
+        showOrders();
+
+    } catch (err) {
+        message(err.message);
+    }
+}
+
+// LOGOUT
+function logout() {
+
+    token = "";
+
+    sessionStorage.removeItem("veloraAdminToken");
+
+    $("orders-section").classList.add("hidden");
+
+    $("login-box").classList.remove("hidden");
+
+    message("You have logged out.");
+}
+
+// LOAD CUSTOMER ORDERS
+async function loadOrders() {
+
+    const container = $("orders-container");
+
+    container.textContent = "Loading orders...";
+
+    try {
+
+        const response = await fetch(`${API}/admin/orders`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        const orders = await response.json();
+
+        if (response.status === 401 || response.status === 403) {
+            logout();
+            message(orders.message || "Please log in again.");
+            return;
+        }
+
+        if (!response.ok) {
+            throw new Error(orders.message || "Could not load orders");
+        }
+
+        container.replaceChildren();
+
+        if (!orders.length) {
+            addText(container, "p", "No orders have been placed yet.");
+            return;
+        }
+
+        orders.forEach(order => {
+
+            const card = document.createElement("article");
+            card.className = "order-card";
+
+            const header = document.createElement("div");
+            header.className = "order-header";
+
+            addText(
+                header,
+                "strong",
+                `Order ID: ...${String(order._id).slice(-6)}`
+            );
+
+            addText(
+                header,
+                "span",
+                new Date(order.createdAt).toLocaleString()
+            );
+
+            card.appendChild(header);
+
+            const info = document.createElement("div");
+
+            addText(info, "p", `Phone: ${order.phone}`);
+            addText(info, "p", `Address: ${order.address}`);
+            addText(info, "p", `Status: ${order.status}`);
+
+            card.appendChild(info);
+
+            const list = document.createElement("div");
+            list.className = "book-list";
+
+            addText(list, "strong", "BOOKS ORDERED");
+
+            (order.items || []).forEach(item => {
+
+                const row = document.createElement("div");
+                row.className = "book-item";
+
+                addText(
+                    row,
+                    "span",
+                    `${item.book?.title || "Book unavailable"} (x${item.quantity})`
+                );
+
+                addText(
+                    row,
+                    "span",
+                    `Rs. ${Number(item.price) * Number(item.quantity)}`
+                );
+
+                list.appendChild(row);
+
+            });
+
+            card.appendChild(list);
+
+            const total = addText(
+                card,
+                "div",
+                `Total: Rs. ${order.totalAmount}`
+            );
+
+            total.className = "total";
+
+            // ORDER STATUS
+            const statusRow = document.createElement("div");
+            statusRow.className = "status-row";
+
+            const select = document.createElement("select");
+
+            [
+                "Pending",
+                "Confirmed",
+                "Shipped",
+                "Delivered",
+                "Cancelled"
+            ].forEach(status => {
+
+                const option = document.createElement("option");
+
+                option.value = status;
+                option.textContent = status;
+
+                if (status === order.status) {
+                    option.selected = true;
+                }
+
+                select.appendChild(option);
+
+            });
+
+            const update = document.createElement("button");
+
+            update.type = "button";
+            update.textContent = "Update Status";
+
+            update.addEventListener("click", () => {
+                updateStatus(order._id, select.value);
+            });
+
+            statusRow.append(select, update);
+
+            card.appendChild(statusRow);
+
+            container.appendChild(card);
+
+        });
+
+    } catch (err) {
+
+        container.textContent = err.message;
+
+    }
+}
+
+// UPDATE ORDER STATUS
+async function updateStatus(id, status) {
+
+    try {
+
+        const response = await fetch(`${API}/admin/orders/${id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({ status })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Update failed");
+        }
+
+        message("Order status updated successfully.");
+
+        loadOrders();
+
+    } catch (err) {
+
+        message(err.message);
+
+    }
+}
+
+// SHOW ORDERS
+function showOrders() {
+
+    $("login-box").classList.add("hidden");
+
+    $("orders-section").classList.remove("hidden");
+
+    loadOrders();
+
+}
+
+// BUTTON EVENTS
+$("login-btn").addEventListener("click", login);
+
+$("logout-btn").addEventListener("click", logout);
+
+$("password").addEventListener("keydown", event => {
+    if (event.key === "Enter") {
+        login();
+    }
+});
+
+// EXISTING SESSION
+if (token) {
+    showOrders();
+}
+
+</script>
+
+</body>
+</html>
