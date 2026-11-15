@@ -1561,7 +1561,7 @@ document.getElementById("newsletterForm").addEventListener("submit", function(ev
 // ===== SEND CUSTOMER ORDER TO BACKEND =====
 // Local testing: backend must be running on http://localhost:5000.
 // When deployed, replace this with your Render backend URL.
-const API_BASE = "http://localhost:5000";
+const API_BASE = "https://velora-backendd-cr95.onrender.com";
 
 document.getElementById("checkoutForm").addEventListener("submit", async function(event) {
   event.preventDefault();
@@ -1626,7 +1626,6 @@ document.getElementById("checkoutForm").addEventListener("submit", async functio
     submitButton.textContent = "PLACE ORDER";
   }
 });
-const API_BASE = "https://velora-backendd-cr95.onrender.com";
 // Close checkout when the dark background is clicked.
 document.getElementById("checkoutOverlay").addEventListener("click", function(event) {
   if (event.target === this) closeCheckout();
